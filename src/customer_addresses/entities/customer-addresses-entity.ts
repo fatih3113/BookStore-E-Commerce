@@ -1,4 +1,3 @@
-
 import {
   Column,
   CreateDateColumn,
@@ -8,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import type { Relation } from 'typeorm';
 import { Customer } from '../../customers/entities/customer-entity.js';
 
 @Entity({ name: 'customer_addresses' })
@@ -30,13 +30,12 @@ export class CustomerAddress {
   @Column({ type: 'varchar', length: 10, name: 'postal_code' })
   postalCode: string;
 
-  @ManyToOne(
-    () => Customer,
-    (customer) => customer.addresses,
-    { nullable: false },
-  )
+  @ManyToOne(() => Customer, (customer) => customer.addresses, {
+    nullable: false,
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'customer_id' })
-  customer: Customer;
+  customer: Relation<Customer>;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

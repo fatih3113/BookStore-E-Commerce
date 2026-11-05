@@ -9,11 +9,11 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import type { Relation } from 'typeorm';
 import { Customer } from '../../customers/entities/customer-entity.js';
 import { OrderItem } from '../../order_items/entities/order-item-entity.js';
 import { Payment } from '../../payments/entities/payment-entity.js';
 import { Shipment } from '../../shipments/entities/shipment-entity.js';
-
 
 @Entity({ name: 'orders' })
 export class Order {
@@ -26,27 +26,23 @@ export class Order {
   @Column({ type: 'varchar', length: 30, default: 'pending' })
   status: string;
 
-  @Column({
-    type: 'decimal',
-    precision: 12,
-    scale: 2,
-    name: 'total_amount',
-    default: 0,
-  })
+  @Column({ type: 'decimal', precision: 12, scale: 2, name: 'total_amount' })
   totalAmount: number;
 
-  @ManyToOne(() => Customer, { nullable: false })
+  @ManyToOne(() => Customer, (customer) => customer.orders, {
+    nullable: false,
+  })
   @JoinColumn({ name: 'customer_id' })
-  customer: Customer;
+  customer: Relation<Customer>;
 
   @OneToMany(() => OrderItem, (item) => item.order)
-  items: OrderItem[];
+  items: Relation<OrderItem[]>;
 
   @OneToOne(() => Payment, (payment) => payment.order)
-  payment: Payment;
+  payment: Relation<Payment>;
 
   @OneToOne(() => Shipment, (shipment) => shipment.order)
-  shipment: Shipment;
+  shipment: Relation<Shipment>;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

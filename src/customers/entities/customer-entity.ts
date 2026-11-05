@@ -1,4 +1,3 @@
-
 import {
   Column,
   CreateDateColumn,
@@ -8,7 +7,9 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import type { Relation } from 'typeorm';
 import { CustomerAddress } from '../../customer_addresses/entities/customer-addresses-entity.js';
+import { Order } from '../../orders/entities/order-entity.js';
 
 @Entity({ name: 'customers' })
 export class Customer {
@@ -24,11 +25,11 @@ export class Customer {
   @Column({ type: 'varchar', length: 20 })
   phone: string;
 
-  @OneToMany(
-    () => CustomerAddress,
-    (customerAddress) => customerAddress.customer,
-  )
-  addresses: CustomerAddress[];
+  @OneToMany(() => CustomerAddress, (address) => address.customer)
+  addresses: Relation<CustomerAddress[]>;
+
+  @OneToMany(() => Order, (order) => order.customer)
+  orders: Relation<Order[]>;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

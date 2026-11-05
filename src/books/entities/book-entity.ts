@@ -9,7 +9,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-
+import type { Relation } from 'typeorm';
 import { Category } from '../../categories/entities/category-entity.js';
 import { Publisher } from '../../publishers/entities/publisher-entity.js';
 import { BookAuthor } from '../../book_authors/entities/book-author-entity.js';
@@ -42,19 +42,19 @@ export class Book {
     nullable: true,
   })
   @JoinColumn({ name: 'category_id' })
-  category: Category;
+  category: Relation<Category> | null;
 
   @ManyToOne(() => Publisher, (publisher) => publisher.books, {
     nullable: true,
   })
   @JoinColumn({ name: 'publisher_id' })
-  publisher: Publisher;
+  publisher: Relation<Publisher> | null;
 
   @OneToMany(() => BookAuthor, (bookAuthor) => bookAuthor.book)
-  bookAuthors: BookAuthor[];
+  bookAuthors: Relation<BookAuthor[]>;
 
   @OneToMany(() => OrderItem, (item) => item.book)
-  orderItems: OrderItem[];
+  orderItems: Relation<OrderItem[]>;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

@@ -1,4 +1,3 @@
-
 import {
   Column,
   Entity,
@@ -6,6 +5,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import type { Relation } from 'typeorm';
 import { Order } from '../../orders/entities/order-entity.js';
 import { Book } from '../../books/entities/book-entity.js';
 
@@ -14,7 +14,7 @@ export class OrderItem {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'int', default: 1 })
+  @Column({ type: 'int' })
   quantity: number;
 
   @Column({ type: 'decimal', precision: 12, scale: 2 })
@@ -28,11 +28,9 @@ export class OrderItem {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'order_id' })
-  order: Order;
+  order: Relation<Order>;
 
-  @ManyToOne(() => Book, (book) => book.orderItems, {
-    nullable: false,
-  })
+  @ManyToOne(() => Book, (book) => book.orderItems, { nullable: false })
   @JoinColumn({ name: 'book_id' })
-  book: Book;
+  book: Relation<Book>;
 }

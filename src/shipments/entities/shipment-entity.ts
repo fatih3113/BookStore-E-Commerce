@@ -1,4 +1,3 @@
-
 import {
   Column,
   Entity,
@@ -6,6 +5,7 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import type { Relation } from 'typeorm';
 import { Order } from '../../orders/entities/order-entity.js';
 
 @Entity({ name: 'shipments' })
@@ -19,23 +19,24 @@ export class Shipment {
   @Column({
     type: 'varchar',
     length: 100,
-    nullable: true,
     name: 'tracking_number',
+    nullable: true,
   })
   trackingNumber: string | null;
 
-  @Column({ type: 'varchar', length: 30, default: 'pending' })
+  @Column({ type: 'varchar', length: 30 })
   status: string;
 
-  @Column({ type: 'timestamp', nullable: true, name: 'shipped_at' })
+  @Column({ type: 'timestamp', name: 'shipped_at', nullable: true })
   shippedAt: Date | null;
 
-  @Column({ type: 'timestamp', nullable: true, name: 'delivered_at' })
+  @Column({ type: 'timestamp', name: 'delivered_at', nullable: true })
   deliveredAt: Date | null;
 
   @OneToOne(() => Order, (order) => order.shipment, {
     nullable: false,
+    onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'order_id' })
-  order: Order;
+  order: Relation<Order>;
 }

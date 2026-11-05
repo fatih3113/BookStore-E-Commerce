@@ -1,4 +1,3 @@
-
 import {
   Column,
   CreateDateColumn,
@@ -7,6 +6,7 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import type { Relation } from 'typeorm';
 import { Order } from '../../orders/entities/order-entity.js';
 
 @Entity({ name: 'payments' })
@@ -20,17 +20,18 @@ export class Payment {
   @Column({ type: 'decimal', precision: 12, scale: 2 })
   amount: number;
 
-  @Column({ type: 'varchar', length: 30, default: 'pending' })
+  @Column({ type: 'varchar', length: 30 })
   status: string;
 
-  @Column({ type: 'timestamp', nullable: true, name: 'paid_at' })
+  @Column({ type: 'timestamp', name: 'paid_at', nullable: true })
   paidAt: Date | null;
 
   @OneToOne(() => Order, (order) => order.payment, {
     nullable: false,
+    onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'order_id' })
-  order: Order;
+  order: Relation<Order>;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
