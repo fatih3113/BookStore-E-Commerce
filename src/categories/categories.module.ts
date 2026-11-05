@@ -11,3 +11,5 @@ import { Category } from './entities/category-entity.js';
   exports: [CategoriesService],
 })
 export class CategoriesModule {}
+
+// penambahan kategori

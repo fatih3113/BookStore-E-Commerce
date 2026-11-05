@@ -82,3 +82,5 @@ export class CategoriesService {
     return { message: `Category "${category.name}" berhasil dihapus` };
   }
 }
+
+// penambahan kategori
