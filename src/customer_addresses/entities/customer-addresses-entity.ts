@@ -10,6 +10,8 @@ import {
 import type { Relation } from 'typeorm';
 import { Customer } from '../../customers/entities/customer-entity.js';
 
+//penambahan customers address
+
 @Entity({ name: 'customer_addresses' })
 export class CustomerAddress {
   @PrimaryGeneratedColumn('uuid')
