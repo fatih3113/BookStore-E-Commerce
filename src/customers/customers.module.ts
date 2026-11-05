@@ -10,3 +10,6 @@ import { Customer } from './entities/customer-entity.js';
   providers: [CustomersService]
 })
 export class CustomersModule {}
+
+
+// penambahan customers

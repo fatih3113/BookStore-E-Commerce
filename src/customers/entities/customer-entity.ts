@@ -10,7 +10,7 @@ import {
 import type { Relation } from 'typeorm';
 import { CustomerAddress } from '../../customer_addresses/entities/customer-addresses-entity.js';
 import { Order } from '../../orders/entities/order-entity.js';
-
+//penambahan customers
 @Entity({ name: 'customers' })
 export class Customer {
   @PrimaryGeneratedColumn('uuid')
