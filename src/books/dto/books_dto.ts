@@ -44,7 +44,6 @@ export class CreateBookDto {
   @Min(0)
   stock?: number;
 
-  // kategori utama buku (boleh null pada update untuk melepas kategori)
   @IsOptional()
   @IsUUID()
   categoryId?: string | null;
