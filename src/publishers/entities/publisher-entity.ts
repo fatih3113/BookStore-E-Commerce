@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 import type { Relation } from 'typeorm';
 import { Book } from '../../books/entities/book-entity.js';
-
+//Update penambahan publisher
 @Entity({ name: 'publishers' })
 export class Publisher {
   @PrimaryGeneratedColumn('uuid')
